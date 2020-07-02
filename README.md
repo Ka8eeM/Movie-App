@@ -4,7 +4,7 @@ First you need to get your api key from https://www.themoviedb.org/ then clone t
 
 
 # General Features
-- Popular Movies.
-- Top Rated Movies.
-- Make your own Favourite List Movies.
+- Popular movies.
+- Top rated movies.
+- Make your own favourite list movies.
 - View movies in Grid or Vertical view.
