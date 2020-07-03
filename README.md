@@ -8,3 +8,14 @@ First you need to get your api key from https://www.themoviedb.org/ then clone t
 - Top rated movies.
 - Make your own favourite list movies.
 - View movies in Grid or Vertical view.
+
+# Screen shots
+
+
+
+
+
+
+
+
+
