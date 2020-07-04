@@ -13,10 +13,10 @@ First you need to get your api key from https://www.themoviedb.org/ then clone t
 
 
 ### Favourite movies
-<img src="screenshots/Screenshot_8.png">
+<img src="screenshots/Screenshot_8.png" width = 300>
 
 ### Top rated movies
-<img src="screenshots/Screenshot_7.png">
+<img src="screenshots/Screenshot_7.png" width = 300>
 
 ### Settings
 <img src="screenshots/Screenshot_6.png">
