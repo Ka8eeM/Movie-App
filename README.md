@@ -9,14 +9,36 @@ First you need to get your api key from https://www.themoviedb.org/ then clone t
 - Make your own favourite list movies.
 - View movies in Grid or Vertical view.
 
-## Screen shots
-images
+# Screen shots
 
 
-![screen](screenshots/Screenshot_1.png)
+### Favourite movies
+<img src="screenshots/Screenshot_8.png">
 
+### Top rated movies
+<img src="screenshots/Screenshot_7.png">
+
+### Settings
+<img src="screenshots/Screenshot_6.png">
+<img src="screenshots/Screenshot_9.png">
+
+### Movie reviews
+<img src="screenshots/Screenshot_5.png">
+
+### Movie trailers
+<img src="screenshots/Screenshot_4.png">
+
+### Movie details after adding to favoutire
+<img src="screenshots/Screenshot_3.png">
+
+### Movie details before adding to favoutire
+<img src="screenshots/Screenshot_2.png">
+
+### Populars movies 
 <img src="screenshots/Screenshot_1.png">
 
+### Share movie 
+<img src="screenshots/Screenshot_0.png">
 
 
 
