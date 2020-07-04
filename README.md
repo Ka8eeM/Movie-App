@@ -9,8 +9,13 @@ First you need to get your api key from https://www.themoviedb.org/ then clone t
 - Make your own favourite list movies.
 - View movies in Grid or Vertical view.
 
-# Screen shots
+## Screen shots
+images
 
+
+![screen](screenshots/Screenshot_1.png)
+
+<img src="screenshots/Screenshot_1.png">
 
 
 
