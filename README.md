@@ -11,6 +11,8 @@ First you need to get your api key from https://www.themoviedb.org/ then clone t
 
 # Screen shots
 
+### Populars movies 
+<img src="screenshots/Screenshot_1.png" width = 200>
 
 ### Favourite movies
 <img src="screenshots/Screenshot_8.png" width = 200>
@@ -34,8 +36,6 @@ First you need to get your api key from https://www.themoviedb.org/ then clone t
 ### Movie details before adding to favoutire
 <img src="screenshots/Screenshot_2.png" width = 200>
 
-### Populars movies 
-<img src="screenshots/Screenshot_1.png" width = 200>
 
 ### Share movie 
 <img src="screenshots/Screenshot_0.png" width = 200>
