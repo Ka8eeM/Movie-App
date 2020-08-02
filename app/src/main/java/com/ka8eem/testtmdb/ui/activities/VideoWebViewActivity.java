@@ -1,4 +1,4 @@
-package com.example.testtmdb.activities;
+package com.ka8eem.testtmdb.ui.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.webkit.WebView;
 
-import com.example.testtmdb.R;
+import com.ka8eem.testtmdb.R;
 
 public class VideoWebViewActivity extends AppCompatActivity {
 

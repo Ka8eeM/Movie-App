@@ -1,8 +1,7 @@
-package com.example.testtmdb.adapters;
+package com.ka8eem.testtmdb.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +10,9 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.testtmdb.R;
-import com.example.testtmdb.activities.MovieDetails;
-import com.example.testtmdb.models.MovieModel;
+import com.ka8eem.testtmdb.R;
+import com.ka8eem.testtmdb.ui.activities.MovieDetails;
+import com.ka8eem.testtmdb.models.MovieModel;
 import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
@@ -23,17 +22,19 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
 
     Context context;
     ArrayList<MovieModel> list;
-    LayoutInflater inflater;
 
-    public MovieAdapter(Context context, ArrayList<MovieModel> list) {
-        this.context = context;
+    public MovieAdapter() {
+    }
+
+    public void setList(ArrayList<MovieModel> list) {
         this.list = list;
-        inflater = LayoutInflater.from(context);
+        notifyDataSetChanged();
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.movie_item_list, parent, false);
+        this.context = parent.getContext();
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_item_list, parent, false);
         MyViewHolder holder = new MyViewHolder(view);
         return holder;
     }

@@ -1,4 +1,4 @@
-package com.example.testtmdb;
+package com.ka8eem.testtmdb;
 
 import org.junit.Test;
 

@@ -1,14 +1,17 @@
-package com.example.testtmdb.activities;
+package com.ka8eem.testtmdb.ui.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -17,16 +20,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.testtmdb.interfaces.Api;
-import com.example.testtmdb.R;
-import com.example.testtmdb.adapters.VideoListAdapter;
-import com.example.testtmdb.models.MovieModel;
-import com.example.testtmdb.models.ReviewModel;
-import com.example.testtmdb.models.ReviewModelDetails;
-import com.example.testtmdb.models.VideoModel;
-import com.example.testtmdb.models.VideoModelJSON;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.ka8eem.testtmdb.interfaces.MovieInterface;
+import com.ka8eem.testtmdb.R;
+import com.ka8eem.testtmdb.adapters.VideoListAdapter;
+import com.ka8eem.testtmdb.models.MovieModel;
+import com.ka8eem.testtmdb.models.ReviewModel;
+import com.ka8eem.testtmdb.models.ReviewModelDetails;
+import com.ka8eem.testtmdb.models.VideoModel;
+import com.ka8eem.testtmdb.models.VideoModelJSON;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.ka8eem.testtmdb.viewmodel.MovieViewModel;
 import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Type;
@@ -43,35 +48,46 @@ public class MovieDetails extends AppCompatActivity {
     // finals
 
     // view
+    private ListView listViewReviews;
+    private RecyclerView recyclerViewVideo;
+    private VideoListAdapter listAdapter;
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     private Intent intent;
     private MovieModel movie;
+    private MovieViewModel movieViewModel;
+
+    // widget
     private ImageView imgMovie_details;
     private TextView txtMovieName;
     private TextView txtMovieRate;
     private TextView txtMovieRelease;
     private TextView txtMovieVote;
     private TextView txtMovieDesc;
-    private ListView listViewReviews;
-    private RecyclerView recyclerViewVideo;
-
+    private Toolbar toolbar;
+    CollapsingToolbarLayout toolbarLayout;
 
     // var
     private ArrayList<ReviewModelDetails> reviewModelList;
     private String _id;
-    private static ArrayList<String> reviewsList;
-    private static ArrayAdapter adapter;
-    private static ArrayList<VideoModel> retVideosList;
-    private static ArrayList<MovieModel> favouriteMoviesIdList;
-    private static int ICON_ADD_TO_FAV_ID;
+    private ArrayList<String> reviewsList;
+    private ArrayAdapter adapter;
+    private ArrayList<VideoModel> retVideosList;
+    private ArrayList<MovieModel> favouriteMoviesIdList;
+    private int ICON_ADD_TO_FAV_ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
+        toolbarLayout = findViewById(R.id.collapsing_Toolbar);
+        toolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
+        toolbarLayout.setCollapsedTitleTextColor(Color.rgb(255, 255, 255));
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.movie_detail);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        movieViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
         intent = getIntent();
         movie = (MovieModel) intent.getSerializableExtra("MyClass");
         _id = movie.getId();
@@ -103,6 +119,7 @@ public class MovieDetails extends AppCompatActivity {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerViewVideo = findViewById(R.id.recycler_view_trailers);
+        listAdapter = new VideoListAdapter();
         recyclerViewVideo.setLayoutManager(layoutManager);
         reviewsList = new ArrayList<>();
         preferences = getSharedPreferences("SHARED_PREF", MODE_PRIVATE);
@@ -126,41 +143,24 @@ public class MovieDetails extends AppCompatActivity {
     }
 
     private void getMovieVideos() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Api.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        Api api = retrofit.create(Api.class);
-        Call<VideoModelJSON> call = api.getMovieVideos(_id);
-        call.enqueue(new Callback<VideoModelJSON>() {
-            @Override
-            public void onResponse(Call<VideoModelJSON> call, Response<VideoModelJSON> response) {
-                VideoModelJSON ret = response.body();
-                retVideosList = ret.getResults();
-                VideoListAdapter adapter1 = new VideoListAdapter(MovieDetails.this, retVideosList);
-                recyclerViewVideo.setAdapter(adapter1);
-            }
 
+        movieViewModel.getMovieVideos(_id);
+        movieViewModel.listMutableLiveData.observe(this, new Observer<ArrayList<VideoModel>>() {
             @Override
-            public void onFailure(Call<VideoModelJSON> call, Throwable t) {
-                Toast.makeText(MovieDetails.this, "Can not fetch Movie Details!", Toast.LENGTH_SHORT).show();
+            public void onChanged(ArrayList<VideoModel> videoModels) {
+                listAdapter.setVideoModelList(videoModels);
+                recyclerViewVideo.setAdapter(listAdapter);
             }
         });
     }
 
 
     private void getMovieReview() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Api.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        Api api = retrofit.create(Api.class);
-        Call<ReviewModel> call = api.getMovieReview(_id);
-        call.enqueue(new Callback<ReviewModel>() {
+        movieViewModel.getMovieReview(_id);
+        movieViewModel.reviewModelMutableLiveData.observe(this, new Observer<ArrayList<ReviewModelDetails>>() {
             @Override
-            public void onResponse(Call<ReviewModel> call, Response<ReviewModel> response) {
-                ReviewModel rev = (ReviewModel) response.body();
-                reviewModelList = rev.getResults();
+            public void onChanged(ArrayList<ReviewModelDetails> reviewModelDetails) {
+                reviewModelList = reviewModelDetails;
                 if (reviewModelList != null && reviewModelList.size() > 0) {
                     for (int i = 0; i < reviewModelList.size(); i++) {
                         String ans = reviewModelList.get(i).getAuthor() + ": "
@@ -171,13 +171,7 @@ public class MovieDetails extends AppCompatActivity {
                     listViewReviews.setAdapter(adapter);
                 }
             }
-
-            @Override
-            public void onFailure(Call<ReviewModel> call, Throwable t) {
-                Toast.makeText(MovieDetails.this, "Can not fetch Movie Details!", Toast.LENGTH_SHORT).show();
-            }
         });
-
     }
 
     private int isFavMovie() {

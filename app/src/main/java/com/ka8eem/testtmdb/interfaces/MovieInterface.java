@@ -1,20 +1,19 @@
-package com.example.testtmdb.interfaces;
+package com.ka8eem.testtmdb.interfaces;
 
-import com.example.testtmdb.utils.MyApiKey;
-import com.example.testtmdb.models.PageModel;
-import com.example.testtmdb.models.ReviewModel;
-import com.example.testtmdb.models.VideoModelJSON;
+import com.ka8eem.testtmdb.utils.MyApiKey;
+import com.ka8eem.testtmdb.models.PageModel;
+import com.ka8eem.testtmdb.models.ReviewModel;
+import com.ka8eem.testtmdb.models.VideoModelJSON;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
-public interface Api {
+public interface MovieInterface {
 
     //https://api.themoviedb.org/3/movie/
     //https://api.themoviedb.org/3/discover/movie?api_key=
-
-    String BASE_URL = "https://api.themoviedb.org/3/";
+    //String BASE_URL = "https://api.themoviedb.org/3/";
 
     String token = "discover/movie?api_key=" + MyApiKey.API_KEY;
 

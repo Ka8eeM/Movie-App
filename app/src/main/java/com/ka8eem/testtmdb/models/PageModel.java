@@ -1,6 +1,4 @@
-package com.example.testtmdb.models;
-
-import com.example.testtmdb.models.MovieModel;
+package com.ka8eem.testtmdb.models;
 
 import java.util.ArrayList;
 

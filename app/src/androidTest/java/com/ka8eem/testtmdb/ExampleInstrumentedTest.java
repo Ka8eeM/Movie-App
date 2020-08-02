@@ -1,4 +1,4 @@
-package com.example.testtmdb;
+package com.ka8eem.testtmdb;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.example.testtmdb", appContext.getPackageName());
+        assertEquals("com.ka8eem.testtmdb", appContext.getPackageName());
     }
 }

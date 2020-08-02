@@ -1,54 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
-    android:background="#fff"
-    tools:context=".activities.MovieDetails">
+    android:background="@color/white"
+    tools:context=".ui.activities.MovieDetails">
 
-    <ScrollView
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:background="@color/white">
 
-        <TableLayout
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:stretchColumns="1">
+            android:layout_height="300dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-            <LinearLayout
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/collapsing_Toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_margin="8dp"
-                android:orientation="horizontal"
-                android:weightSum="2">
+                android:layout_height="match_parent"
+                app:contentScrim="@color/black"
+                app:expandedTitleMarginEnd="64dp"
+                app:expandedTitleMarginStart="48dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-                <ImageView
-                    android:id="@+id/img_movie_details"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="start"
-                    android:layout_weight="1"
-                    android:adjustViewBounds="true"
-                    android:background="@android:color/transparent"
-                    android:foregroundGravity="left"
-                    android:scaleType="fitXY" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1"
-                    android:gravity="top|center"
-                    android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/img_movie_details"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:adjustViewBounds="true"
+                        android:background="@android:color/transparent"
+                        android:foregroundGravity="center"
+                        android:scaleType="fitXY" />
+                </RelativeLayout>
 
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            <RelativeLayout
+                android:layout_below="@id/coordinator"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <RelativeLayout
+                    android:id="@+id/relative1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp">
 
                     <TextView
                         android:id="@+id/txt_movie_name_details"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
                         android:layout_marginBottom="8dp"
                         android:paddingLeft="5dp"
                         android:text="@string/movie_detail"
@@ -56,9 +77,11 @@
                         android:textSize="30sp" />
 
                     <TextView
+                        android:drawableRight="@drawable/ic_star"
                         android:id="@+id/txt_movie_rate"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/txt_movie_name_details"
                         android:layout_marginBottom="8dp"
                         android:paddingLeft="5dp"
                         android:text="@string/movie_detail"
@@ -69,6 +92,7 @@
                         android:id="@+id/txt_movie_release_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@id/txt_movie_rate"
                         android:layout_marginBottom="8dp"
                         android:paddingLeft="5dp"
                         android:text="@string/movie_detail"
@@ -78,58 +102,66 @@
                         android:id="@+id/txt_movie_vote"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/txt_movie_release_date"
                         android:layout_marginBottom="8dp"
                         android:paddingLeft="5dp"
                         android:text="@string/movie_detail"
                         android:textSize="15sp" />
+                </RelativeLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/relative1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txt_movie_desc_details"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:paddingLeft="8dp"
+                        android:text="This is movie description, This is movie description, This is movie description"
+                        android:textColor="#000"
+                        android:textSize="18sp" />
+
+                    <View style="@style/Divider" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:paddingLeft="8dp"
+                        android:text="TRAILERS"
+                        android:textColor="#000"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view_trailers"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp" />
+
+                    <View style="@style/Divider" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:paddingLeft="8dp"
+                        android:text="REVIEWS"
+                        android:textColor="#000"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                    <ListView
+                        android:id="@+id/list_view_reviews"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="15dp" />
                 </LinearLayout>
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/txt_movie_desc_details"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:paddingLeft="8dp"
-                android:text="This is movie description, This is movie description, This is movie description"
-                android:textColor="#000"
-                android:textSize="18sp" />
-
-            <View style="@style/Divider" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:paddingLeft="8dp"
-                android:text="TRAILERS"
-                android:textColor="#000"
-                android:textSize="30sp"
-                android:textStyle="bold" />
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view_trailers"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginRight="5dp"></androidx.recyclerview.widget.RecyclerView>
-
-            <View style="@style/Divider" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:paddingLeft="8dp"
-                android:text="REVIEWS"
-                android:textColor="#000"
-                android:textSize="30sp"
-                android:textStyle="bold" />
-
-            <ListView
-                android:id="@+id/list_view_reviews"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginRight="15dp" />
-        </TableLayout>
-    </ScrollView>
-</FrameLayout>
+            </RelativeLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</RelativeLayout>

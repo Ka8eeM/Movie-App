@@ -1,18 +1,17 @@
-package com.example.testtmdb.activities;
+package com.ka8eem.testtmdb.ui.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.testtmdb.R;
+import com.ka8eem.testtmdb.R;
+import com.ka8eem.testtmdb.ui.fragments.SortOptionDialog;
 
 public class SettingActivity extends AppCompatActivity implements SortOptionDialog.SingleChoiceListener {
 

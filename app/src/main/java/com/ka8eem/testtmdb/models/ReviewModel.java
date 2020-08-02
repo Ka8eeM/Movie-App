@@ -1,4 +1,4 @@
-package com.example.testtmdb.models;
+package com.ka8eem.testtmdb.models;
 
 import java.util.ArrayList;
 

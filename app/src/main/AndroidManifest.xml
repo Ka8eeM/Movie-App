@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.testtmdb">
+    package="com.ka8eem.testtmdb">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -12,14 +12,15 @@
         android:roundIcon="@mipmap/ic_app_foreground"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.VideoWebViewActivity"></activity>
+        <activity android:name=".ui.activities.VideoWebViewActivity"></activity>
         <activity
-            android:name=".activities.MovieDetails"
-            android:parentActivityName=".activities.MainActivity" />
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            android:name=".ui.activities.MovieDetails"
+            android:parentActivityName=".ui.activities.MainActivity" />
         <activity
-            android:name=".activities.SettingActivity"
-            android:parentActivityName=".activities.MainActivity" />
-        <activity android:name=".activities.MainActivity">
+            android:name=".ui.activities.SettingActivity"
+            android:parentActivityName=".ui.activities.MainActivity" />
+        <activity android:name=".ui.activities.MainActivity">
             <tools:validation testUrl="http://www.example.com/testtmdb" />
 
             <intent-filter>

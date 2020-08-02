@@ -1,8 +1,9 @@
-package com.example.testtmdb.activities;
+package com.ka8eem.testtmdb.ui.activities;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,22 +11,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.testtmdb.interfaces.Api;
-import com.example.testtmdb.adapters.MovieAdapter;
-import com.example.testtmdb.R;
-import com.example.testtmdb.models.MovieModel;
-import com.example.testtmdb.models.PageModel;
+import com.ka8eem.testtmdb.interfaces.MovieInterface;
+import com.ka8eem.testtmdb.adapters.MovieAdapter;
+import com.ka8eem.testtmdb.R;
+import com.ka8eem.testtmdb.models.MovieModel;
+import com.ka8eem.testtmdb.models.PageModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.ka8eem.testtmdb.viewmodel.MovieViewModel;
 
 import java.lang.reflect.Type;
+import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,18 +46,23 @@ public class MainActivity extends AppCompatActivity {
 
 
     private RecyclerView recyclerView;
-    public static PageModel retPageModel;
-    public static ArrayList<MovieModel> listMovieModel;
+    private MovieAdapter movieAdapter;
+
+    public ArrayList<MovieModel> listMovieModel;
+
     private String SORT_BY;
     private String LAYOUT_VIEW;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
+    MovieViewModel movieViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        movieViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
         recyclerView = findViewById(R.id.recycler_view);
+        movieAdapter = new MovieAdapter();
         preferences = getSharedPreferences("SHARED_PREF", MODE_PRIVATE);
         setRecyclerViewLayout();
         loadData();
@@ -88,18 +94,27 @@ public class MainActivity extends AppCompatActivity {
         editor = preferences.edit();
         if (SORT_BY != null && !SORT_BY.equals("NOT"))
             getSupportActionBar().setTitle(SORT_BY.toUpperCase());
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Api.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        Api api = retrofit.create(Api.class);
-        Call<PageModel> call = null;
+
         if (SORT_BY != null && !SORT_BY.equals("NOT")) {
-            if (SORT_BY.equals("Most Popular"))
-                call = api.getPopular();
-            else if (SORT_BY.equals("Top Rated"))
-                call = api.getTopRated();
-            else {
+            if (SORT_BY.equals("Most Popular")) {
+                movieViewModel.getPopular();
+                movieViewModel.movieModelMutableLiveData.observe(this, new Observer<ArrayList<MovieModel>>() {
+                    @Override
+                    public void onChanged(ArrayList<MovieModel> movieModels) {
+                        movieAdapter.setList(movieModels);
+                        recyclerView.setAdapter(movieAdapter);
+                    }
+                });
+            } else if (SORT_BY.equals("Top Rated")) {
+                movieViewModel.getTopRated();
+                movieViewModel.movieModelMutableLiveData.observe(this, new Observer<ArrayList<MovieModel>>() {
+                    @Override
+                    public void onChanged(ArrayList<MovieModel> movieModels) {
+                        movieAdapter.setList(movieModels);
+                        recyclerView.setAdapter(movieAdapter);
+                    }
+                });
+            } else {
                 Gson gson = new Gson();
                 String json = preferences.getString("FAV_LIST", null);
                 Type type = new TypeToken<ArrayList<MovieModel>>() {
@@ -107,28 +122,21 @@ public class MainActivity extends AppCompatActivity {
                 listMovieModel = gson.fromJson(json, type);
                 if (listMovieModel == null)
                     listMovieModel = new ArrayList<>();
-                MovieAdapter adapter = new MovieAdapter(MainActivity.this, listMovieModel);
+                MovieAdapter adapter = new MovieAdapter();
+                adapter.setList(listMovieModel);
                 recyclerView.setAdapter(adapter);
                 return;
             }
-        } else
-            call = api.getPopular();
-
-
-        call.enqueue(new Callback<PageModel>() {
-            @Override
-            public void onResponse(Call<PageModel> call, Response<PageModel> response) {
-                retPageModel = response.body();
-                listMovieModel = retPageModel.getResults();
-                MovieAdapter movieAdapter = new MovieAdapter(MainActivity.this, listMovieModel);
-                recyclerView.setAdapter(movieAdapter);
-            }
-
-            @Override
-            public void onFailure(Call<PageModel> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Can not load movies!", Toast.LENGTH_SHORT).show();
-            }
-        });
+        } else {
+            movieViewModel.getPopular();
+            movieViewModel.movieModelMutableLiveData.observe(this, new Observer<ArrayList<MovieModel>>() {
+                @Override
+                public void onChanged(ArrayList<MovieModel> movieModels) {
+                    movieAdapter.setList(movieModels);
+                    recyclerView.setAdapter(movieAdapter);
+                }
+            });
+        }
     }
 
     @Override

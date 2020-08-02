@@ -1,6 +1,6 @@
 # Movie-App
 This App uses "The Movie Database"
-First you need to get your api key from https://www.themoviedb.org/ then clone the project and follow the TODO task
+First you need to get your movieInterface key from https://www.themoviedb.org/ then clone the project and follow the TODO task
 
 
 # General Features
