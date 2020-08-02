@@ -47,4 +47,6 @@ dependencies {
     // add view model
     implementation 'android.arch.lifecycle:extensions:1.1.0'
     implementation 'android.arch.lifecycle:viewmodel:1.1.0'
+
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }
