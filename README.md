@@ -2,6 +2,11 @@
 This App uses "The Movie Database"
 First you need to get your movieInterface key from https://www.themoviedb.org/ then clone the project and follow the TODO task
 
+# Technologies
+- MVVM design pattern
+- Singleton design pattern
+- REST APIs (Rertrofit, Picasso library)
+- JAVA
 
 # General Features
 - Popular movies.
@@ -32,6 +37,7 @@ First you need to get your movieInterface key from https://www.themoviedb.org/ t
 
 ### Movie details before adding to favoutire
 <img src="screenshots/Screenshot_2.png" width = 200>
+<img src="screenshots/Screenshot_10.png" width = 200>
 
 
 ### Share movie 
