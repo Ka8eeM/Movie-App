@@ -5,7 +5,7 @@ First you need to get your movieInterface key from https://www.themoviedb.org/ t
 # Technologies
 - MVVM design pattern
 - Singleton design pattern
-- REST APIs (Rertrofit, Picasso library)
+- REST APIs (Retrofit, Picasso library)
 - JAVA
 
 # General Features
