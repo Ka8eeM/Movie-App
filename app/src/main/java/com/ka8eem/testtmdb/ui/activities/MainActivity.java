@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         SORT_BY = preferences.getString("SORT_BY", "NOT");
         editor = preferences.edit();
         if (SORT_BY != null && !SORT_BY.equals("NOT"))
-            getSupportActionBar().setTitle(SORT_BY.toUpperCase());
+            getSupportActionBar().setTitle(SORT_BY);
 
         if (SORT_BY != null && !SORT_BY.equals("NOT")) {
             if (SORT_BY.equals("Most Popular")) {
@@ -128,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
         } else {
+            getSupportActionBar().setTitle("Most Popular");
             movieViewModel.getPopular();
             movieViewModel.movieModelMutableLiveData.observe(this, new Observer<ArrayList<MovieModel>>() {
                 @Override
